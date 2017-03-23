@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "iot-pircamera",
+  "private_key_id": "a0c726b868ac275bbc3421d6a04635b5d7229b51",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDhhxkznL+C5jhz\nFGiSB7GhaTKyEXb9BEMrnbgAguo2rmNgCsFyA9aOmfeG6eML0pxCsKtvqUju4fEE\nw4hqtZTwj5lU+1QRRrl0WddlITko0hKFKbXTuLBSvvR9VOs6mjrwt/T0AOII8aJs\nWi9G/AU1FlnYMQZJH4GDvJBhEggFkHPeNr3YcQFUGoDXjP/sApNzNTGrrrLcR75+\niCiO5mtezDyfRSkokWWIdT/vJ0oa9cqz/wqT6RtL0i9qC6Le/hBVzXZqq610dWKy\n+GYA4XXAeyY6GmIvAzWPqL7TDLH8IS50oCOEsLQEjTcw82xVXAfeQCfEGEa3ZHpM\nQSIWvE+3AgMBAAECggEAEvRLxe6ymcnHjMR2VW+YGjzBKf4VxgYJryy+PizCin31\nlCjTQUXZTnraNtiJYID+6Qv4HJZZrtoGa6QTXwSL0/v9owrMcfdDtuemFrXIHAor\nzE1JHtYy24F5At+UNYSo13ped/NrC91jDUA3IPwlY+TRAD5+jL69H9lFOSNO0Ui+\nRhgbvfg6mlMqfo0qIgzvqXlNzKBn15PGr7AHfFTNOhk7QWHGud6Luq041SKUCCWL\nxBFa7iUSwOnFYTa3uu7K4zLcv676A+q+HHJoh2b9Cws64FfVssTZdsIdEVdNw00a\nnpJeWR0qgqYh6YRiz+S/tIEMe+wErnd8ClRzxVcEwQKBgQD7X6TTRP6ir+Mekodr\nJh9vrD1z9JIl0noyC0DLjlHNI0oAeVO7MvyenamtthsvNj18QOo44tgvVj4S9VYg\n8jb6pi3JaapyeCRxHXswiBv+VAkgUKHGAWooHSYmBiHzU8u4PHcm+klCqGE1QF34\nsVgUHj6kwTdxPDHm5xvvso6U6QKBgQDlra5GgWopuVP55LxM3JyZiHTkqr0oFtWf\nn8VzG+VqyT6vqeRpJF8pBYWw+X4zTp25pTmtFyGcqzCKv6B0pgObcx8HDXlADoAS\nJ/aQTFxn5gTNyV5NOw0M6GXJ6Ary9qe7NSO8+6WN/756zGkA65yao+XzcUlJvwwp\nV11uK+dbnwKBgQCDNkSSJySHhSoXjkLzkj28i/qz6UjUR06Tir4ywsI+QxpgrvQe\n9hlZLlEgpLsB5N0pW7UnJnnUE79pI/jmT6iVI2MpDGf1QnM7PDlOdu2tzu3ImW4o\nLhrcf4KnPHJCUk43iBBmHyVYjw3WvxeONfwU3Ei0tUqcZ+Bgd+hkMR8t6QKBgQCS\n1Yh3FsFyT0M6nVssoFWVakGg9u7bNE36MMCgqJLwxBvJXgnilhgoN5mS3M4rqvT2\n/IR0/jbE3ES6T2wbZw8jUGPjtF9x7lM+SEI/WjIxUkJ79WLOaRQczm5UuH5Xeg0d\niAmDBjZ/I6L5CrmOlxKVYnbePeymsvbpbysSBgtw7QKBgQCKYcown7ZZTs23HFR7\nszu5K6Hs4pkWSa3glkFuWY8W/+i6V6HbWGnIW/srTZkEynqp2EI+XdMrfLv1miB/\nuL5R7JUw7Wb91wq5Iq+uVkOC+0ZGu9cjTrGoWm+zXc0dDO+zeFWlyHA2Bjl/3/QI\ny6VOo1/j0MMM4Q1dDK0ZFgXnvg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "condesire@iot-pircamera.iam.gserviceaccount.com",
+  "client_id": "103109618842317159126",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/condesire%40iot-pircamera.iam.gserviceaccount.com"
+}
