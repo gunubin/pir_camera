@@ -1,0 +1,59 @@
+<template>
+  <div>
+    <md-toolbar>
+      <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
+        <md-icon>menu</md-icon>
+      </md-button>
+      <h1 class="md-title">おまめカメラ</h1>
+    </md-toolbar>
+    <md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
+      <md-toolbar class="md-large">
+        <div class="md-toolbar-container">
+          <h3 class="md-title">感情で絞り込み</h3>
+        </div>
+      </md-toolbar>
+
+      <div>
+        <md-switch v-model="config.filter.blurred" id="blurred" class="md-primary" @change="filterChange">ぼやけてるBlurred</md-switch>
+        <md-switch v-model="config.filter.headwear" id="blurred" class="md-primary" @change="filterChange">帽子headwear</md-switch>
+        <md-switch v-model="config.filter.joy" id="blurred" class="md-primary" @change="filterChange">楽しいjoy</md-switch>
+        <md-switch v-model="config.filter.sorrow" id="blurred" class="md-primary" @change="filterChange">悲しいsorrow</md-switch>
+        <md-switch v-model="config.filter.surprise" id="blurred" class="md-primary" @change="filterChange">驚きsurprise</md-switch>
+        <md-switch v-model="config.filter.underExposed" id="blurred" class="md-primary" @change="filterChange">肌の露出underExposed</md-switch>
+      </div>
+
+    </md-sidenav>
+  </div>
+</template>
+
+<script>
+
+  export default {
+    name: 'headerComponent',
+    components: {},
+    props: [ 'config' ],
+    data () {
+      return {}
+    },
+    methods: {
+      toggleLeftSidenav: function () {
+        this.$refs.leftSidenav.toggle();
+      },
+      open: function (ref) {
+      },
+      close: function (ref) {
+      },
+      filterChange: function() {
+        console.log(this.config.filter.blurred);
+        setTimeout(() => {
+          console.log(this.config.filter);
+          this.$store.dispatch('getAllPhotos', this.config.filter)
+        }, 100)
+
+      }
+    }
+  }
+</script>
+
+<style scoped>
+</style>

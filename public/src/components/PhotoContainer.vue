@@ -1,39 +1,65 @@
 <template>
   <div class="photo-container">
-    <photo
-        v-for="p in photos"
-        :key="p.id"
-        :id="p.id"
-        :filename="p.filename"
-        :path="p.path"
-        :faces="p.faces"
-    ></photo>
+    <image-dialog :imageSrc="imageSrc" ref="dialog"></image-dialog>
+    <md-layout md-gutter>
+      <photo
+              v-on:openImageDialog="openImageDialog"
+              v-for="p in photos"
+              :config="config"
+              :key="p.id"
+              :id="p.id"
+              :filename="p.filename"
+              :path="p.path"
+              :created_at="p.created_at"
+              :faces="p.faces"
+      ></photo>
+    </md-layout>
+
+    <md-whiteframe md-tag="section">
+
+      <md-button class="md-raised md-primary">More</md-button>
+    </md-whiteframe>
+
+
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import Photo from './Photo'
+  import axios from 'axios';
+  import { mapGetters, mapActions } from 'vuex'
 
-export default {
-  name: 'photo-container',
-  components: {
-    Photo
-  },
-  data () {
-    return {
-      photos: []
-    }
-  },
-  created: function() {
-    axios.get('http://mbp2016.local:3000/photos/').then((res) => {
-      for(let i=0; i<res.data.length; i++) {
-        this.photos.push(res.data[i])
+  import Photo from './Photo'
+  import ImageDialog from './ImageDialog'
+
+  export default {
+    name: 'photo-container',
+    components: {
+      Photo,
+      ImageDialog
+    },
+    props: [ 'config' ],
+    data () {
+      return {
+        imageSrc: ''
       }
-    })
+    },
+    computed: mapGetters({
+      photos: 'allPhotos'
+    }),
+    created: function () {
+      this.$store.dispatch('getAllPhotos', this.config.filter)
+    },
+    methods: {
+      openImageDialog: function(imageSrc) {
+        this.imageSrc = imageSrc;
+        this.$refs['dialog'].$refs['alert'].open();
+      }
+    }
   }
-}
 </script>
 
 <style scoped>
+  .photo-container {
+    overflow: hidden;
+  }
 </style>

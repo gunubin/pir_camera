@@ -1,14 +1,29 @@
 <template>
-  <div class="photo">
-    <img ref="obj" :src="url" alt="">
+  <md-layout md-flex-xsmall="50" md-flex="33">
+    <md-card>
 
-    <face v-for="f in faces"
-      :key="f.id"
-      :face="f"
-      :ratio="ratio"
-    ></face>
+      <div v-on:click="openImageDialog">
+        <face v-for="f in faces"
+              :key="f.id"
+              :face="f"
+              :ratio="ratio"
+        ></face>
 
-  </div>
+        <md-card-media>
+          <md-image :md-src="imageSrc"></md-image>
+        </md-card-media>
+      </div>
+
+      <!--<md-card-header>-->
+      <div class="md-subhead">
+        <md-icon>access_time</md-icon>
+        <span>{{created_at | moment('YYYY-MM-DD(ddd) HH:mm')}}</span>
+      </div>
+      <!--</md-card-header>-->
+
+      <!--<md-card-content></md-card-content>-->
+    </md-card>
+  </md-layout>
 </template>
 
 <script>
@@ -17,30 +32,35 @@
   export default {
     name: 'photo',
     props: [
+      'config',
       'path',
       'filename',
+      'created_at',
       'faces',
     ],
     components: {
       Face
     },
     data () {
-      return {
-        ratio: '',
-      }
+      return {ratio: ''}
     },
     computed: {
-      url: function() {
-        return 'http://mbp2016.local:3000' + this.path.replace('public', '') + '/' + this.filename
-      }
+      imageSrc: function () {
+        return this.config.host + this.path.replace('public', '') + '/' + this.filename
+      },
     },
-    mounted: function() {
-      var self = this
-      var loader = new Image()
+    mounted: function () {
+      let self = this
+      let loader = new Image()
       loader.onload = () => {
         this.ratio = self.$el.clientWidth / loader.naturalWidth
       }
-      loader.src = this.url
+      loader.src = this.imageSrc
+    },
+    methods: {
+      openImageDialog: function () {
+        this.$emit('openImageDialog', this.imageSrc);
+      }
     }
   }
 </script>
@@ -48,11 +68,17 @@
 <style scoped>
   .photo {
     position: relative;
-    width: 25%;
-    float: left;
   }
-  .photo img {
-    max-width: 100%;
-    height: auto;
+
+  .card-reservation {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .md-icon {
+    margin: 8px;
+    color: rgba(#000, .54) !important;
   }
 </style>

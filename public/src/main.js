@@ -5,15 +5,31 @@ import Vue from 'vue'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueMaterial from 'vue-material'
+import vueMoment from 'vue-moment'
+import moment from 'moment'
+import locale_ja from 'moment/locale/ja'
+
+
+
+moment.locale('ja', locale_ja)
+Vue.use(vueMoment, {
+  moment
+})
+
 Vue.use(VueAxios, axios)
+Vue.use(VueMaterial)
 
 import App from './App'
+import store from './store/index'
+// import { currency } from './currency'
 
+// Vue.filter('currency', currency)
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   template: '<App/>',
   components: { App }
 })
