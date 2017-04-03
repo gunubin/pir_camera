@@ -13,14 +13,32 @@
         </div>
       </md-toolbar>
 
-      <div>
-        <md-switch v-model="config.filter.blurred" id="blurred" class="md-primary" @change="filterChange">ぼやけてるBlurred</md-switch>
-        <md-switch v-model="config.filter.headwear" id="blurred" class="md-primary" @change="filterChange">帽子headwear</md-switch>
-        <md-switch v-model="config.filter.joy" id="blurred" class="md-primary" @change="filterChange">楽しいjoy</md-switch>
-        <md-switch v-model="config.filter.sorrow" id="blurred" class="md-primary" @change="filterChange">悲しいsorrow</md-switch>
-        <md-switch v-model="config.filter.surprise" id="blurred" class="md-primary" @change="filterChange">驚きsurprise</md-switch>
-        <md-switch v-model="config.filter.underExposed" id="blurred" class="md-primary" @change="filterChange">肌の露出underExposed</md-switch>
-      </div>
+      <md-list>
+        <md-list-item>
+          ぼやけている
+          <md-switch v-model="config.filter.blurred" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+        </md-list-item>
+        <md-list-item>
+          帽子
+          <md-switch v-model="config.filter.headwear" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+        </md-list-item>
+        <md-list-item>
+          楽しい
+          <md-switch v-model="config.filter.joy" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+        </md-list-item>
+        <md-list-item>
+          悲しい
+          <md-switch v-model="config.filter.sorrow" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+        </md-list-item>
+        <md-list-item>
+          驚き
+          <md-switch v-model="config.filter.surprise" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+        </md-list-item>
+        <md-list-item>
+          肌の露出
+          <md-switch v-model="config.filter.underExposed" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+        </md-list-item>
+      </md-list>
 
     </md-sidenav>
   </div>
@@ -28,13 +46,15 @@
 
 <script>
 
+  import { mapGetters, mapActions } from 'vuex'
+
   export default {
     name: 'headerComponent',
     components: {},
-    props: [ 'config' ],
-    data () {
-      return {}
-    },
+    props: [ 'config', 'filter' ],
+    computed: mapGetters({
+      filter: 'filter',
+    }),
     methods: {
       toggleLeftSidenav: function () {
         this.$refs.leftSidenav.toggle();
@@ -44,12 +64,9 @@
       close: function (ref) {
       },
       filterChange: function() {
-        console.log(this.config.filter.blurred);
         setTimeout(() => {
-          console.log(this.config.filter);
           this.$store.dispatch('getAllPhotos', this.config.filter)
         }, 100)
-
       }
     }
   }

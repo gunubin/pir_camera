@@ -1,19 +1,22 @@
 require "open-uri"
 require "rmagick"
 
+# photos controller
 class PhotosController < ApplicationController
-
   # GET /photos/
   def index
-    @photos = Photo.filter({
-                               'anger' => params[:anger],
-                               'blurred' => params[:blurred],
-                               'headwear' => params[:headwear],
-                               'joy' => params[:joy],
-                               'sorrow' => params[:sorrow],
-                               'surprise' => params[:surprise],
-                               'under_exposed' => params[:under_exposed],
-                           }).order('photos.id desc').limit(21).page((params[:page]))
+
+    query = {
+      anger: params[:anger],
+      blurred: params[:blurred],
+      headwear: params[:headwear],
+      joy: params[:joy],
+      sorrow: params[:sorrow],
+      surprise: params[:surprise],
+      under_exposed: params[:under_exposed],
+    }.with_indifferent_access
+
+    @photos = Photo.filter(query).order('photos.id desc').limit(21).page(params[:page])
 
     render json: @photos.to_json(include: :faces)
   end
@@ -89,9 +92,6 @@ class PhotosController < ApplicationController
 
     render json: {status: "ok"}
 
-
   end
-
-  private
 
 end

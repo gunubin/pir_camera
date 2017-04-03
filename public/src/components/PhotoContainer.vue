@@ -15,12 +15,6 @@
       ></photo>
     </md-layout>
 
-    <md-whiteframe md-tag="section">
-
-      <md-button class="md-raised md-primary">More</md-button>
-    </md-whiteframe>
-
-
   </div>
 </template>
 
@@ -37,17 +31,11 @@
       Photo,
       ImageDialog
     },
-    props: [ 'config' ],
+    props: [ 'config', 'photos' ],
     data () {
       return {
         imageSrc: ''
       }
-    },
-    computed: mapGetters({
-      photos: 'allPhotos'
-    }),
-    created: function () {
-      this.$store.dispatch('getAllPhotos', this.config.filter)
     },
     methods: {
       openImageDialog: function(imageSrc) {
