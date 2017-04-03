@@ -29,8 +29,6 @@ class Photo < ApplicationRecord
   end
 
   def self.filter(method)
-    puts method
-
     return filter_anger if method['anger'] == 'true'
     return filter_blurred if method['blurred'] == 'true'
     return filter_headwear if method['headwear'] == 'true'
@@ -40,20 +38,6 @@ class Photo < ApplicationRecord
     return filter_under_exposed if method['under_exposed'] == 'true'
 
     return filter_non if method.values.all? { |v| v == 'false' || v.nil? }
-
-=begin
-    case method.to_s
-      when 'anger' then filter_anger
-      when 'blurred' then filter_blurred
-      when 'headwear' then filter_headwear
-      when 'joy' then filter_joy
-      when 'sorrow' then filter_sorrow
-      when 'surprise' then filter_surprise
-      when 'under_exposed' then filter_under_exposed
-      else
-        filter_non
-    end
-=end
   end
 
   def self.is_uploadable(time)

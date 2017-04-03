@@ -17,11 +17,10 @@
       <!--<md-card-header>-->
       <div class="md-subhead">
         <md-icon>access_time</md-icon>
-        <span>{{created_at | moment('YYYY-MM-DD(ddd) HH:mm')}}</span>
+        <span>{{created_at | moment('HH:mm')}}</span>
       </div>
       <!--</md-card-header>-->
 
-      <!--<md-card-content></md-card-content>-->
     </md-card>
   </md-layout>
 </template>
