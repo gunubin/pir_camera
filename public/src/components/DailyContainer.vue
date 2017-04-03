@@ -27,7 +27,7 @@
     data () {
       return {
         containerStyle: {
-          height: 0
+          height: window.innerHeight - 64 + 'px'
         },
         styleObject: {
           zIndex: 2,
