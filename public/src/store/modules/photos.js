@@ -1,9 +1,11 @@
 import photo from '../../api/photo'
 import * as types from '../mutation-types'
+import _ from 'underscore'
 
 const state = {
   all: {},
   filter: {
+    noface: false,
     blurred: false,
     headwear: false,
     joy: false,
@@ -22,6 +24,7 @@ const getters = {
 
 const actions = {
   getAllPhotos ({ commit }, filter) {
+    commit(types.RECEIVE_FILTER, {filter})
     photo.getPhotos(filter, (photos) => {
       commit(types.RECEIVE_PHOTOS, { photos })
     })
@@ -51,7 +54,9 @@ const mutations = {
     state.page++
   },
   [types.RECEIVE_FILTER](state, { filter }) {
-    state.filter = filter
+    _.each(filter,(val, key) => {
+      state.filter[key] = val
+    })
   },
 }
 
