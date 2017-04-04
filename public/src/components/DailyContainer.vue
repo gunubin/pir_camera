@@ -39,13 +39,15 @@
     },
     computed: mapGetters({
       items: 'allPhotos',
+      storeFilter: 'filter',
     }),
     created: function () {
-      this.$store.dispatch('getAllPhotos', this.config.filter)
+      this.$store.dispatch('getAllPhotos', this.storeFilter)
     },
     methods: {
       onClickMore: function () {
-        this.$store.dispatch('getMorePhotos', this.config.filter)
+        console.log(this.$store);
+        this.$store.dispatch('getMorePhotos', this.storeFilter)
       },
       handleWindowResize(event) {
         this.containerStyle.height = event.currentTarget.innerHeight - 64 + 'px' // toolbar 64

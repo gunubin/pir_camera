@@ -80,10 +80,10 @@
       }
     },
     computed: mapGetters({
-      stateFilter: 'filter',
+      storeFilter: 'filter',
     }),
     mounted() {
-      this.$store.dispatch('setFilter', this.stateFilter)
+      this.$store.dispatch('setFilter', this.storeFilter)
     },
     methods: {
       toggleLeftSidenav: function () {

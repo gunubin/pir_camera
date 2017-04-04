@@ -50,7 +50,7 @@ const mutations = {
   [types.RECEIVE_MORE_PHOTOS](state, { photos }) {
     state.all = Object.assign({}, state.all, photos)
   },
-  [types.RECEIVE_PAGE](state, { }) {
+  [types.RECEIVE_PAGE](state, {}) {
     state.page++
   },
   [types.RECEIVE_FILTER](state, { filter }) {
