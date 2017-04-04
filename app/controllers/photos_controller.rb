@@ -7,6 +7,7 @@ class PhotosController < ApplicationController
   def index
 
     query = {
+      noface: params[:noface],
       anger: params[:anger],
       blurred: params[:blurred],
       headwear: params[:headwear],

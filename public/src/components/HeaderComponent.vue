@@ -15,28 +15,42 @@
 
       <md-list>
         <md-list-item>
+          顔認識がない
+          
+          <md-switch v-model="filter.noface" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+        </md-list-item>
+        <md-list-item>
           ぼやけている
-          <md-switch v-model="config.filter.blurred" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+          
+          <md-switch v-model="filter.blurred" id="blurred" class="md-primary" @change="filterChange"></md-switch>
         </md-list-item>
         <md-list-item>
           帽子
-          <md-switch v-model="config.filter.headwear" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+          
+          <md-switch v-model="filter.headwear" id="blurred" class="md-primary"
+                     @change="filterChange"></md-switch>
         </md-list-item>
         <md-list-item>
           楽しい
-          <md-switch v-model="config.filter.joy" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+          
+          <md-switch v-model="filter.joy" id="blurred" class="md-primary" @change="filterChange"></md-switch>
         </md-list-item>
         <md-list-item>
           悲しい
-          <md-switch v-model="config.filter.sorrow" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+          
+          <md-switch v-model="filter.sorrow" id="blurred" class="md-primary" @change="filterChange"></md-switch>
         </md-list-item>
         <md-list-item>
           驚き
-          <md-switch v-model="config.filter.surprise" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+          
+          <md-switch v-model="filter.surprise" id="blurred" class="md-primary"
+                     @change="filterChange"></md-switch>
         </md-list-item>
         <md-list-item>
           肌の露出
-          <md-switch v-model="config.filter.underExposed" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+          
+          <md-switch v-model="filter.underExposed" id="blurred" class="md-primary"
+                     @change="filterChange"></md-switch>
         </md-list-item>
       </md-list>
 
@@ -46,15 +60,31 @@
 
 <script>
 
-  import { mapGetters, mapActions } from 'vuex'
+  import {mapGetters, mapActions} from 'vuex'
 
   export default {
     name: 'headerComponent',
     components: {},
-    props: [ 'config', 'filter' ],
+    props: ['config'],
+    data() {
+      return {
+        filter: {
+          noface: false,
+          blurred: false,
+          headwear: false,
+          joy: false,
+          sorrow: false,
+          surprise: false,
+          underExposed: false,
+        }
+      }
+    },
     computed: mapGetters({
-      filter: 'filter',
+      stateFilter: 'filter',
     }),
+    mounted() {
+      this.$store.dispatch('setFilter', this.stateFilter)
+    },
     methods: {
       toggleLeftSidenav: function () {
         this.$refs.leftSidenav.toggle();
@@ -63,9 +93,9 @@
       },
       close: function (ref) {
       },
-      filterChange: function() {
+      filterChange: function () {
         setTimeout(() => {
-          this.$store.dispatch('getAllPhotos', this.config.filter)
+          this.$store.dispatch('getAllPhotos', this.filter)
         }, 100)
       }
     }
