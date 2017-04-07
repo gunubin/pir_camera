@@ -7,6 +7,7 @@ class PhotosController < ApplicationController
   def index
 
     query = {
+      favorite: params[:favorite],
       noface: params[:noface],
       anger: params[:anger],
       blurred: params[:blurred],
@@ -20,6 +21,54 @@ class PhotosController < ApplicationController
     @photos = Photo.filter(query).order('photos.id desc').limit(21).page(params[:page])
 
     render json: @photos.to_json(include: :faces)
+  end
+
+  # GET /photos/favorite/:id
+  def favorite
+    if Photo.update(params[:id], {favorite: true}) then
+      render json: {status: 'ok'}
+    else
+      render json: {status: 'ng'}
+    end
+  end
+
+  # GET /photos/unfavorite/:id
+  def unfavorite
+    if Photo.update(params[:id], {favorite: false}) then
+      render json: {status: 'ok'}
+    else
+      render json: {status: 'ng'}
+    end
+  end
+
+  def create
+
+
+    file = params[:pic]
+    # original_name = file.original_filename
+    extname = '.png'
+    name = Time.now.strftime('%H%M%S')
+
+
+    @today = Time.now()
+
+    path = "public/photos/#{@today.year}/#{@today.month}-#{@today.day}"
+
+    FileUtils.mkdir_p(path) unless FileTest.exist?(path)
+    # File.open("#{path}/#{name}#{extname}", 'wb') { |f|
+    #   f.write(file.read)
+    # }
+
+
+    img = Magick::Image.from_blob(file.read).shift
+    img.format = 'PNG'
+    img.write("#{path}/#{name}.png")
+
+    photo = Photo.create(filename: name + extname, path: path, extname: extname)
+    photo.get_face_api()
+
+    render json: {status: "ok"}
+
   end
 
   def apitest
@@ -59,36 +108,6 @@ class PhotosController < ApplicationController
     #   render json: {status: "ok", message: "GoogleFaceAPIの時間内枚数制限です。"} and return
     # end
 
-    photo.get_face_api()
-
-    render json: {status: "ok"}
-
-  end
-
-  def create
-
-
-    file = params[:pic]
-    # original_name = file.original_filename
-    extname = '.png'
-    name = Time.now.strftime('%H%M%S')
-
-
-    @today = Time.now()
-
-    path = "public/photos/#{@today.year}/#{@today.month}-#{@today.day}"
-
-    FileUtils.mkdir_p(path) unless FileTest.exist?(path)
-    # File.open("#{path}/#{name}#{extname}", 'wb') { |f|
-    #   f.write(file.read)
-    # }
-
-
-    img = Magick::Image.from_blob(file.read).shift
-    img.format = 'PNG'
-    img.write("#{path}/#{name}.png")
-
-    photo = Photo.create(filename: name + extname, path: path, extname: extname)
     photo.get_face_api()
 
     render json: {status: "ok"}

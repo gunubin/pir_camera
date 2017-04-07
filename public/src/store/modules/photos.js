@@ -1,10 +1,11 @@
-import photo from '../../api/photo'
+import photoAPI from '../../api/photo'
 import * as types from '../mutation-types'
 import _ from 'underscore'
 
 const state = {
   all: {},
   filter: {
+    favorite: false,
     noface: false,
     blurred: false,
     headwear: false,
@@ -25,7 +26,7 @@ const getters = {
 const actions = {
   getAllPhotos ({ commit }, filter) {
     commit(types.RECEIVE_FILTER, {filter})
-    photo.getPhotos(filter, (photos) => {
+    photoAPI.getPhotos(filter, (photos) => {
       commit(types.RECEIVE_PHOTOS, { photos })
     })
   },
@@ -33,12 +34,23 @@ const actions = {
     commit(types.RECEIVE_PAGE, {})
 
     let params = Object.assign({}, filter, {page: state.page})
-    photo.getPhotos(params, (photos) => {
+    photoAPI.getPhotos(params, (photos) => {
       commit(types.RECEIVE_MORE_PHOTOS, { photos })
     })
   },
   setFilter ({ commit }, filter) {
     commit(types.RECEIVE_FILTER, {filter})
+  },
+  setFavorite ({ commit }, photo ) {
+    if (photo.favorite) {
+      photoAPI.setUnFavorite(photo.id, (res) => {
+        commit(types.RECEIVE_FAVORITE, {photo})
+      })
+    } else {
+      photoAPI.setFavorite(photo.id, (res) => {
+        commit(types.RECEIVE_FAVORITE, {photo})
+      })
+    }
   },
 }
 
@@ -57,6 +69,9 @@ const mutations = {
     _.each(filter,(val, key) => {
       state.filter[key] = val
     })
+  },
+  [types.RECEIVE_FAVORITE](state, {photo} ) {
+    photo.favorite = !photo.favorite
   },
 }
 
