@@ -23,5 +23,18 @@ export default {
     axios.get(config.host + '/photos/', {params: params}).then((res) => {
       cb(_getDate(res.data))
     })
+  },
+
+  setFavorite(photo_id, cb) {
+    axios.get(config.host + '/photos/favorite/' + photo_id ).then((res) => {
+      cb(res.data)
+    })
+  },
+
+  setUnFavorite(photo_id, cb) {
+    axios.get(config.host + '/photos/unfavorite/' + photo_id ).then((res) => {
+      cb(res.data)
+    })
   }
+
 }

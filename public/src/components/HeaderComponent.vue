@@ -4,8 +4,14 @@
       <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
         <md-icon>menu</md-icon>
       </md-button>
-      <h1 class="md-title">おまめカメラ</h1>
+
+      <h2 class="md-title" style="flex: 1;">おまめカメラ</h2>
+
+      <md-button class="md-icon-button">
+        <md-icon>delete</md-icon>
+      </md-button>
     </md-toolbar>
+
     <md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
       <md-toolbar class="md-large">
         <div class="md-toolbar-container">
@@ -15,8 +21,11 @@
 
       <md-list>
         <md-list-item>
+          お気に入り
+          <md-switch v-model="filter.favorite" id="blurred" class="md-primary" @change="filterChange"></md-switch>
+        </md-list-item>
+        <md-list-item>
           顔認識がない
-          
           <md-switch v-model="filter.noface" id="blurred" class="md-primary" @change="filterChange"></md-switch>
         </md-list-item>
         <md-list-item>

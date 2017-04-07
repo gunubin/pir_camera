@@ -6,6 +6,7 @@ class Photo < ApplicationRecord
   has_many :faces, :dependent => :destroy
 
   # Scopes
+  scope :filter_favorite, -> { where(favorite: true) }
   scope :filter_non, -> { eager_load(:faces) }
   scope :filter_noface, -> { includes(:faces).where(faces: { id: nil }) }
   scope :filter_anger, -> { eager_load(:faces).merge(Face.anger) }
@@ -30,6 +31,7 @@ class Photo < ApplicationRecord
   end
 
   def self.filter(method)
+    return filter_favorite if method['favorite'] == 'true'
     return filter_noface if method['noface'] == 'true'
     return filter_anger if method['anger'] == 'true'
     return filter_blurred if method['blurred'] == 'true'
