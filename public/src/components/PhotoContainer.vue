@@ -1,6 +1,6 @@
 <template>
   <div class="photo-container">
-    <image-dialog :imageSrc="imageSrc" ref="dialog"></image-dialog>
+    <image-dialog :target="target" ref="dialog"></image-dialog>
     <md-layout md-gutter>
       <photo
               v-on:openImageDialog="openImageDialog"
@@ -8,18 +8,13 @@
               :config="config"
               :key="p.id"
               :id="p.id"
+              :photo="p"
               :filename="p.filename"
               :path="p.path"
               :created_at="p.created_at"
               :faces="p.faces"
       ></photo>
     </md-layout>
-
-    <md-whiteframe md-tag="section">
-
-      <md-button class="md-raised md-primary">More</md-button>
-    </md-whiteframe>
-
 
   </div>
 </template>
@@ -32,26 +27,21 @@
   import ImageDialog from './ImageDialog'
 
   export default {
-    name: 'photo-container',
+    name: 'photoAPI-container',
     components: {
       Photo,
       ImageDialog
     },
-    props: [ 'config' ],
+    props: [ 'config', 'photos' ],
     data () {
       return {
-        imageSrc: ''
+        imageSrc: '',
+        target: []
       }
     },
-    computed: mapGetters({
-      photos: 'allPhotos'
-    }),
-    created: function () {
-      this.$store.dispatch('getAllPhotos', this.config.filter)
-    },
     methods: {
-      openImageDialog: function(imageSrc) {
-        this.imageSrc = imageSrc;
+      openImageDialog: function(target) {
+        this.target = target
         this.$refs['dialog'].$refs['alert'].open();
       }
     }

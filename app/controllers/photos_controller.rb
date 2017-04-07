@@ -1,21 +1,74 @@
 require "open-uri"
 require "rmagick"
 
+# photos controller
 class PhotosController < ApplicationController
-
   # GET /photos/
   def index
-    @photos = Photo.filter({
-                               'anger' => params[:anger],
-                               'blurred' => params[:blurred],
-                               'headwear' => params[:headwear],
-                               'joy' => params[:joy],
-                               'sorrow' => params[:sorrow],
-                               'surprise' => params[:surprise],
-                               'under_exposed' => params[:under_exposed],
-                           }).order('photos.id desc').limit(21).page((params[:page]))
+
+    query = {
+      favorite: params[:favorite],
+      noface: params[:noface],
+      anger: params[:anger],
+      blurred: params[:blurred],
+      headwear: params[:headwear],
+      joy: params[:joy],
+      sorrow: params[:sorrow],
+      surprise: params[:surprise],
+      under_exposed: params[:under_exposed],
+    }.with_indifferent_access
+
+    @photos = Photo.filter(query).order('photos.id desc').limit(21).page(params[:page])
 
     render json: @photos.to_json(include: :faces)
+  end
+
+  # GET /photos/favorite/:id
+  def favorite
+    if Photo.update(params[:id], {favorite: true}) then
+      render json: {status: 'ok'}
+    else
+      render json: {status: 'ng'}
+    end
+  end
+
+  # GET /photos/unfavorite/:id
+  def unfavorite
+    if Photo.update(params[:id], {favorite: false}) then
+      render json: {status: 'ok'}
+    else
+      render json: {status: 'ng'}
+    end
+  end
+
+  def create
+
+
+    file = params[:pic]
+    # original_name = file.original_filename
+    extname = '.png'
+    name = Time.now.strftime('%H%M%S')
+
+
+    @today = Time.now()
+
+    path = "public/photos/#{@today.year}/#{@today.month}-#{@today.day}"
+
+    FileUtils.mkdir_p(path) unless FileTest.exist?(path)
+    # File.open("#{path}/#{name}#{extname}", 'wb') { |f|
+    #   f.write(file.read)
+    # }
+
+
+    img = Magick::Image.from_blob(file.read).shift
+    img.format = 'PNG'
+    img.write("#{path}/#{name}.png")
+
+    photo = Photo.create(filename: name + extname, path: path, extname: extname)
+    photo.get_face_api()
+
+    render json: {status: "ok"}
+
   end
 
   def apitest
@@ -60,38 +113,5 @@ class PhotosController < ApplicationController
     render json: {status: "ok"}
 
   end
-
-  def create
-
-
-    file = params[:pic]
-    # original_name = file.original_filename
-    extname = '.png'
-    name = Time.now.strftime('%H%M%S')
-
-
-    @today = Time.now()
-
-    path = "public/photos/#{@today.year}/#{@today.month}-#{@today.day}"
-
-    FileUtils.mkdir_p(path) unless FileTest.exist?(path)
-    # File.open("#{path}/#{name}#{extname}", 'wb') { |f|
-    #   f.write(file.read)
-    # }
-
-
-    img = Magick::Image.from_blob(file.read).shift
-    img.format = 'PNG'
-    img.write("#{path}/#{name}.png")
-
-    photo = Photo.create(filename: name + extname, path: path, extname: extname)
-    photo.get_face_api()
-
-    render json: {status: "ok"}
-
-
-  end
-
-  private
 
 end

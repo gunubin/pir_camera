@@ -2,7 +2,8 @@
   <md-layout md-flex-xsmall="50" md-flex="33">
     <md-card>
 
-      <div v-on:click="openImageDialog">
+      <div class="card-media-outer">
+        <p class="click-area" v-on:click="openImageDialog"></p>
         <face v-for="f in faces"
               :key="f.id"
               :face="f"
@@ -15,24 +16,32 @@
       </div>
 
       <!--<md-card-header>-->
-      <div class="md-subhead">
-        <md-icon>access_time</md-icon>
-        <span>{{created_at | moment('YYYY-MM-DD(ddd) HH:mm')}}</span>
-      </div>
       <!--</md-card-header>-->
 
-      <!--<md-card-content></md-card-content>-->
+      <md-card-actions>
+        <div class="md-subhead">
+          <md-icon>access_time</md-icon>
+          <span>{{created_at | moment('HH:mm')}}</span>
+        </div>
+        <md-button :class="{'md-warn': photo.favorite}" class="md-icon-button" @click.native="onClickFavorite">
+          <md-icon>favorite</md-icon>
+        </md-button>
+      </md-card-actions>
+
+
     </md-card>
   </md-layout>
 </template>
 
 <script>
+
   import Face from './Face'
 
   export default {
     name: 'photo',
     props: [
       'config',
+      'photo',
       'path',
       'filename',
       'created_at',
@@ -59,26 +68,25 @@
     },
     methods: {
       openImageDialog: function () {
-        this.$emit('openImageDialog', this.imageSrc);
+        this.$emit('openImageDialog', this);
+      },
+      onClickFavorite: function () {
+        this.$store.dispatch('setFavorite', this.photo)
       }
     }
   }
 </script>
 
 <style scoped>
-  .photo {
+  .card-media-outer {
     position: relative;
   }
-
-  .card-reservation {
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-  }
-
-  .md-icon {
-    margin: 8px;
-    color: rgba(#000, .54) !important;
+  .click-area {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 </style>

@@ -1,20 +1,20 @@
 <template>
   <div id="app">
     <headerComponent :config="config"></headerComponent>
-    <photoContainer :config="config"></photoContainer>
+    <dailyContainer :config="config"></dailyContainer>
   </div>
 </template>
 
 <script>
   import Config from './Config'
   import HeaderComponent from './components/HeaderComponent'
-  import PhotoContainer from './components/PhotoContainer'
+  import DailyContainer from './components/DailyContainer'
 
   export default {
     name: 'app',
     components: {
       HeaderComponent,
-      PhotoContainer
+      DailyContainer
     },
     data () {
       return {

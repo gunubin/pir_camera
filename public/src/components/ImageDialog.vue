@@ -7,17 +7,23 @@
 
 <script>
 
+  import _ from 'underscore'
+
   export default {
     name: 'imageDialog',
     props: [
-      'imageSrc',
+      'target',
     ],
     data () {
       return {}
     },
     computed: {
       image: function() {
-        return '<img class="dialog-image" src="' + this.imageSrc + '" />'
+        let faces = '';
+        _.each(this.target.faces, (val, key) => {
+          faces += val.anger
+        })
+        return '<div><img class="dialog-image" src="' + this.target.imageSrc + '" />' + faces + '</div>'
       }
     },
     mounted: function () {
