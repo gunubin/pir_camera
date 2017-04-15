@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <headerComponent :config="config" v-on:onClickCalender="onClickCalender" ></headerComponent>
+    <headerComponent :config="config" v-on:onClickCalender="onClickCalender" v-on:clickMenuBtn="onClickMenuBtn"></headerComponent>
+
+    <side ref="side"></side>
+
     <dailyContainer :config="config"></dailyContainer>
 
     <date-picker :date="startTime" :option="option" :limit="limit" ref="cal" v-on:checkday="onCheckDay" v-on:calCancel="onCalcancel"></date-picker>
@@ -11,16 +14,21 @@
   import Config from './Config'
   import HeaderComponent from './components/HeaderComponent'
   import DailyContainer from './components/DailyContainer'
+  import Side from './components/Side'
   import datepicker from './components/vue-datepicker-es6.vue';
 
   export default {
     name: 'app',
     components: {
       HeaderComponent,
+      Side,
       DailyContainer,
       'date-picker': datepicker,
     },
     methods: {
+      onClickMenuBtn: function () {
+        this.$refs.side.toggleLeftSidenav()
+      },
       onClickCalender: function () {
         this.$refs.cal.showCheck();
       },
@@ -41,8 +49,8 @@
         },
         option: {
           type: 'day',
-          week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-          month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          week: ['月', '火', '水', '木', '金', '土', '日'],
+          month: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
           format: 'YYYY-MM-DD',
           placeholder: 'when?',
           inputStyle: {
@@ -66,28 +74,11 @@
           overlayOpacity: 0.5, // 0.5 as default
           dismissible: true // as true as default
         },
-        timeoption: {
-          type: 'min',
-          week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-          month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-          format: 'YYYY-MM-DD HH:mm'
-        },
-        multiOption: {
-          type: 'multi-day',
-          week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-          month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-          format: "YYYY-MM-DD HH:mm"
-        },
         limit: [
           {
             type: 'weekday',
-            available: [1, 2, 3, 4, 5]
+            available: [0, 1, 2, 3, 4, 5, 6]
           },
-//          {
-//            type: 'fromto',
-//            from: '2016-02-01',
-//            to: '2016-02-20'
-//          }
         ]
       }
     },

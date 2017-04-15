@@ -64,7 +64,7 @@
 
 <style scoped>
   .daily-container {
-    overflow: auto;
+    overflow-y: scroll;
   }
   .button {
     margin-top: 20px;

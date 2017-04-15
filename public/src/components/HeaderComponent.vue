@@ -1,5 +1,4 @@
 <template>
-  <div>
     <md-toolbar>
 
       <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
@@ -19,22 +18,17 @@
 
     </md-toolbar>
 
-    <side ref="side"></side>
 
-  </div>
 </template>
 
 <script>
 
   import {mapGetters, mapActions} from 'vuex'
 
-  import Side from './Side'
 
   export default {
     name: 'headerComponent',
-    components: {
-      Side
-    },
+    components: {},
     props: ['config'],
     data() {
       return {
@@ -48,7 +42,7 @@
     },
     methods: {
       toggleLeftSidenav: function () {
-        this.$refs.side.toggleLeftSidenav()
+        this.$emit('clickMenuBtn')
       },
       onClickCalender: function() {
         this.$emit('onClickCalender', this);
