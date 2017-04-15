@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <headerComponent :config="config" v-on:onClickCalender="onClickCalender" ></headerComponent>
+    <headerComponent :config="config" v-on:onClickCalender="onClickCalender" v-on:clickMenuBtn="onClickMenuBtn"></headerComponent>
+
+    <side ref="side"></side>
+
     <dailyContainer :config="config"></dailyContainer>
 
     <date-picker :date="startTime" :option="option" :limit="limit" ref="cal" v-on:checkday="onCheckDay" v-on:calCancel="onCalcancel"></date-picker>
@@ -11,16 +14,21 @@
   import Config from './Config'
   import HeaderComponent from './components/HeaderComponent'
   import DailyContainer from './components/DailyContainer'
+  import Side from './components/Side'
   import datepicker from './components/vue-datepicker-es6.vue';
 
   export default {
     name: 'app',
     components: {
       HeaderComponent,
+      Side,
       DailyContainer,
       'date-picker': datepicker,
     },
     methods: {
+      onClickMenuBtn: function () {
+        this.$refs.side.toggleLeftSidenav()
+      },
       onClickCalender: function () {
         this.$refs.cal.showCheck();
       },
