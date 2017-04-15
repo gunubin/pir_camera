@@ -1,6 +1,7 @@
 <template>
   <div>
     <md-toolbar>
+
       <md-button class="md-icon-button" @click.native="toggleLeftSidenav">
         <md-icon>menu</md-icon>
       </md-button>
@@ -10,60 +11,16 @@
       <md-button class="md-icon-button">
         <md-icon>delete</md-icon>
       </md-button>
+
+      <md-button class="md-icon-button" @click.native="onClickCalender">
+        <md-icon>date_range</md-icon>
+      </md-button>
+
+
     </md-toolbar>
 
-    <md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
-      <md-toolbar class="md-large">
-        <div class="md-toolbar-container">
-          <h3 class="md-title">感情で絞り込み</h3>
-        </div>
-      </md-toolbar>
+    <side ref="side"></side>
 
-      <md-list>
-        <md-list-item>
-          お気に入り
-          <md-switch v-model="filter.favorite" id="blurred" class="md-primary" @change="filterChange"></md-switch>
-        </md-list-item>
-        <md-list-item>
-          顔認識がない
-          <md-switch v-model="filter.noface" id="blurred" class="md-primary" @change="filterChange"></md-switch>
-        </md-list-item>
-        <md-list-item>
-          ぼやけている
-          
-          <md-switch v-model="filter.blurred" id="blurred" class="md-primary" @change="filterChange"></md-switch>
-        </md-list-item>
-        <md-list-item>
-          帽子
-          
-          <md-switch v-model="filter.headwear" id="blurred" class="md-primary"
-                     @change="filterChange"></md-switch>
-        </md-list-item>
-        <md-list-item>
-          楽しい
-          
-          <md-switch v-model="filter.joy" id="blurred" class="md-primary" @change="filterChange"></md-switch>
-        </md-list-item>
-        <md-list-item>
-          悲しい
-          
-          <md-switch v-model="filter.sorrow" id="blurred" class="md-primary" @change="filterChange"></md-switch>
-        </md-list-item>
-        <md-list-item>
-          驚き
-          
-          <md-switch v-model="filter.surprise" id="blurred" class="md-primary"
-                     @change="filterChange"></md-switch>
-        </md-list-item>
-        <md-list-item>
-          肌の露出
-          
-          <md-switch v-model="filter.underExposed" id="blurred" class="md-primary"
-                     @change="filterChange"></md-switch>
-        </md-list-item>
-      </md-list>
-
-    </md-sidenav>
   </div>
 </template>
 
@@ -71,21 +28,16 @@
 
   import {mapGetters, mapActions} from 'vuex'
 
+  import Side from './Side'
+
   export default {
     name: 'headerComponent',
-    components: {},
+    components: {
+      Side
+    },
     props: ['config'],
     data() {
       return {
-        filter: {
-          noface: false,
-          blurred: false,
-          headwear: false,
-          joy: false,
-          sorrow: false,
-          surprise: false,
-          underExposed: false,
-        }
       }
     },
     computed: mapGetters({
@@ -96,16 +48,10 @@
     },
     methods: {
       toggleLeftSidenav: function () {
-        this.$refs.leftSidenav.toggle();
+        this.$refs.side.toggleLeftSidenav()
       },
-      open: function (ref) {
-      },
-      close: function (ref) {
-      },
-      filterChange: function () {
-        setTimeout(() => {
-          this.$store.dispatch('getAllPhotos', this.filter)
-        }, 100)
+      onClickCalender: function() {
+        this.$emit('onClickCalender', this);
       }
     }
   }

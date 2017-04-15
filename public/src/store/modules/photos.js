@@ -30,6 +30,11 @@ const actions = {
       commit(types.RECEIVE_PHOTOS, { photos })
     })
   },
+  getDatePhotos ({ commit }, day) {
+    photoAPI.getPhotos({day: day}, (photos) => {
+      commit(types.RECEIVE_DATE_PHOTOS, { photos })
+    })
+  },
   getMorePhotos ({ commit }, filter) {
     commit(types.RECEIVE_PAGE, {})
 
@@ -56,6 +61,10 @@ const actions = {
 
 const mutations = {
   [types.RECEIVE_PHOTOS](state, { photos }) {
+    state.page = 1
+    state.all = photos
+  },
+  [types.RECEIVE_DATE_PHOTOS](state, { photos }) {
     state.page = 1
     state.all = photos
   },
