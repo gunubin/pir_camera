@@ -7,6 +7,7 @@ class PhotosController < ApplicationController
   def index
 
     query = {
+      day: params[:day],
       favorite: params[:favorite],
       noface: params[:noface],
       anger: params[:anger],

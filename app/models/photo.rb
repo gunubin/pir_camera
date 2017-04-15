@@ -17,6 +17,8 @@ class Photo < ApplicationRecord
   scope :filter_surprise, -> { eager_load(:faces).merge(Face.surprise) }
   scope :filter_under_exposed, -> { eager_load(:faces).merge(Face.under_exposed) }
 
+  scope :filter_day, -> day { where(created_at: day.to_time.all_day) }
+
   scope :order_order_num_asc, -> { reorder(order_num: :asc) }
   scope :order_lowest_charge_asc, -> { reorder(lowest_charge: :asc) }
   scope :order_lowest_charge_desc, -> { reorder(lowest_charge: :desc) }
@@ -40,6 +42,8 @@ class Photo < ApplicationRecord
     return filter_sorrow if method['sorrow'] == 'true'
     return filter_surprise if method['surprise'] == 'true'
     return filter_under_exposed if method['under_exposed'] == 'true'
+
+    return filter_day(method['day']) if method['day'].present?
 
     return filter_non if method.values.all? { |v| v == 'false' || v.nil? }
   end

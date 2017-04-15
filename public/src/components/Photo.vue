@@ -11,7 +11,7 @@
         ></face>
 
         <md-card-media>
-          <md-image :md-src="imageSrc"></md-image>
+          <img :src="imageSrc"></img>
         </md-card-media>
       </div>
 
