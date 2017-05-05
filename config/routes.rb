@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   get '/photos/favorite/:id' => 'photos#favorite'
   get '/photos/unfavorite/:id' => 'photos#unfavorite'
 
+  get '/photos/tweet' => 'photos#tweet'
+
+
+
   # test
   post '/upload' => 'photos#upload'
   get '/apitest/:id' => 'photos#apitest'
