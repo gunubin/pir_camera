@@ -49,3 +49,12 @@ gem 'kaminari'
 
 gem 'rmagick'
 
+gem 'omniauth'
+gem 'omniauth-twitter'
+# gem 'omniauth-oauth2'
+
+
+gem 'twitter'
+
+gem 'dotenv-rails'
+

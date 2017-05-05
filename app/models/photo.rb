@@ -83,6 +83,7 @@ class Photo < ApplicationRecord
     # rescue
     # end
 
+    faces
   end
 
   def to_hash(str)

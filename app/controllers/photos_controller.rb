@@ -66,9 +66,13 @@ class PhotosController < ApplicationController
     img.write("#{path}/#{name}.png")
 
     photo = Photo.create(filename: name + extname, path: path, extname: extname)
-    photo.get_face_api()
 
-    render json: {status: "ok"}
+    faces = photo.get_face_api
+
+    tweet = tweetFaces(faces)
+
+    render json: {status: "ok", tweet: tweet}
+
 
   end
 
@@ -109,10 +113,65 @@ class PhotosController < ApplicationController
     #   render json: {status: "ok", message: "GoogleFaceAPIの時間内枚数制限です。"} and return
     # end
 
-    photo.get_face_api()
+    faces = photo.get_face_api()
 
-    render json: {status: "ok"}
+    tweet = tweetFaces(faces)
+
+    render json: {status: "ok", tweet: tweet}
 
   end
+
+  def tweetFaces(faces)
+    tweet = feel_string(faces)
+    faces.each do |face|
+      likelihood = face.likelihood
+      tweet << ' anger: ' + likelihood.anger.to_s if any_feel(likelihood.anger.to_s)
+      tweet << ' blurred: ' + likelihood.blurred.to_s if any_feel(likelihood.blurred.to_s)
+      tweet << ' joy: ' + likelihood.joy.to_s if any_feel(likelihood.joy.to_s)
+      tweet << ' sorrow: ' + likelihood.sorrow.to_s if any_feel(likelihood.sorrow.to_s)
+      tweet << ' surprise: ' + likelihood.surprise.to_s if any_feel(likelihood.surprise.to_s)
+    end
+
+    @twitter = twitter_client
+    @twitter.update(tweet)
+
+    tweet
+  end
+
+
+  def feel_string(faces)
+    result = 'おまめカメラが、'
+    faces.each do |face|
+      likelihood = face.likelihood
+      result << "怒りを検出しました " if any_feel(likelihood.anger.to_s)
+      result << "楽しいを検出しました " if any_feel(likelihood.joy.to_s)
+      result << "悲しみを検出しました " if any_feel(likelihood.sorrow.to_s)
+      result << "驚きを検出しました " if any_feel(likelihood.surprise.to_s)
+    end
+    result << ' '
+  end
+
+  # VERY_LIKELY	非常に高いレベル
+  # LIKELY	高いレベル
+  # POSSIBLE	そうだと言えるレベル
+  # UNLIKELY	低いレベル
+  # VERY_UNLIKELY	非常に低いレベル
+  # NKNOWN
+  def any_feel(feel)
+    feel == 'VERY_LIKELY' || feel == 'LIKELY' || feel == 'POSSIBLE' || feel == 'UNLIKELY'
+  end
+
+  def twitter_client
+
+    @twitter = Twitter::REST::Client.new do |config|
+      config.consumer_key = ENV['TWITTER_KEY']
+      config.consumer_secret = ENV['TWITTER_SECRET']
+
+      config.access_token = ENV['TWITTER_ACCESS_TOKEN']
+      config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
+    end
+
+  end
+
 
 end
