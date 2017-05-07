@@ -6,10 +6,11 @@
       </md-button>
 
       <h2 class="md-title" style="flex: 1;">おまめカメラ</h2>
-
+<!--
       <md-button class="md-icon-button">
         <md-icon>delete</md-icon>
       </md-button>
+-->
 
       <md-button class="md-icon-button" @click.native="onClickCalender">
         <md-icon>date_range</md-icon>

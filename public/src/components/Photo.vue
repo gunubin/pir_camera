@@ -1,5 +1,5 @@
 <template>
-  <md-layout md-flex-xsmall="50" md-flex="33">
+  <md-layout md-flex-xsmall="100" md-flex="33">
     <md-card>
 
       <div class="card-media-outer">
@@ -11,7 +11,7 @@
         ></face>
 
         <md-card-media>
-          <img :src="imageSrc"></img>
+          <img :src="imageSrc" />
         </md-card-media>
       </div>
 
