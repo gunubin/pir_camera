@@ -23,7 +23,7 @@
         _.each(this.target.faces, (val, key) => {
           faces += val.anger
         })
-        return '<div><img class="dialog-image" src="' + this.target.imageSrc + '" />' + faces + '</div>'
+        return '<div><img class="dialog-image" src="' + this.target.imageSrc + '" /></div>'
       }
     },
     mounted: function () {
