@@ -122,18 +122,20 @@ class PhotosController < ApplicationController
   end
 
   def tweetFaces(faces)
-    tweet = feel_string(faces)
-    faces.each do |face|
-      likelihood = face.likelihood
-      tweet << ' anger: ' + likelihood.anger.to_s if any_feel(likelihood.anger.to_s)
-      tweet << ' blurred: ' + likelihood.blurred.to_s if any_feel(likelihood.blurred.to_s)
-      tweet << ' joy: ' + likelihood.joy.to_s if any_feel(likelihood.joy.to_s)
-      tweet << ' sorrow: ' + likelihood.sorrow.to_s if any_feel(likelihood.sorrow.to_s)
-      tweet << ' surprise: ' + likelihood.surprise.to_s if any_feel(likelihood.surprise.to_s)
-    end
+    tweet = ''
+    if any?(faces) then
+      tweet = feel_string(faces)
+      faces.each do |face|
+        likelihood = face.likelihood
+        tweet << ' joy: ' + likelihood.joy.to_s if anyLevel(likelihood.joy.to_s)
+        tweet << ' anger: ' + likelihood.anger.to_s if anyLevel(likelihood.anger.to_s)
+        tweet << ' sorrow: ' + likelihood.sorrow.to_s if anyLevel(likelihood.sorrow.to_s)
+        tweet << ' surprise: ' + likelihood.surprise.to_s if anyLevel(likelihood.surprise.to_s)
+      end
 
-    @twitter = twitter_client
-    @twitter.update(tweet)
+      @twitter = twitter_client
+      @twitter.update(tweet)
+    end
 
     tweet
   end
@@ -143,10 +145,10 @@ class PhotosController < ApplicationController
     result = 'おまめカメラが、'
     faces.each do |face|
       likelihood = face.likelihood
-      result << "怒りを検出しました " if any_feel(likelihood.anger.to_s)
-      result << "楽しいを検出しました " if any_feel(likelihood.joy.to_s)
-      result << "悲しみを検出しました " if any_feel(likelihood.sorrow.to_s)
-      result << "驚きを検出しました " if any_feel(likelihood.surprise.to_s)
+      result << "楽しいを検出しました " if anyLevel(likelihood.joy.to_s)
+      result << "怒りを検出しました " if anyLevel(likelihood.anger.to_s)
+      result << "悲しみを検出しました " if anyLevel(likelihood.sorrow.to_s)
+      result << "驚きを検出しました " if anyLevel(likelihood.surprise.to_s)
     end
     result << ' '
   end
@@ -157,8 +159,21 @@ class PhotosController < ApplicationController
   # UNLIKELY	低いレベル
   # VERY_UNLIKELY	非常に低いレベル
   # NKNOWN
-  def any_feel(feel)
+  def anyLevel(feel)
     feel == 'VERY_LIKELY' || feel == 'LIKELY' || feel == 'POSSIBLE' || feel == 'UNLIKELY'
+  end
+
+  def anyFeels(face)
+    feels = %w(joy anger sorrow surprise)
+    feels.any? do |feel|
+      anyLevel(face.likelihood.send(feel).to_s)
+    end
+  end
+
+  def any?(faces)
+    faces.any? do |face|
+      anyFeels(face)
+    end
   end
 
   def twitter_client
