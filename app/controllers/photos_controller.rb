@@ -8,6 +8,7 @@ class PhotosController < ApplicationController
     query = {
       day: params[:day],
       favorite: params[:favorite],
+      description: params[:description],
       noface: params[:noface],
       anger: params[:anger],
       blurred: params[:blurred],

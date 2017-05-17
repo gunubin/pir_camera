@@ -11,40 +11,41 @@
           お気に入り
           <md-switch v-model="filter.favorite" id="blurred" class="md-primary" @change="filterChange"></md-switch>
         </md-list-item>
+
+        <md-list-item>
+          説明がある
+          <md-switch v-model="filter.description" id="description" class="md-primary" @change="filterChange"></md-switch>
+        </md-list-item>
+
         <md-list-item>
           顔認識がない
           <md-switch v-model="filter.noface" id="blurred" class="md-primary" @change="filterChange"></md-switch>
         </md-list-item>
+
         <md-list-item>
           ぼやけている
-          
           <md-switch v-model="filter.blurred" id="blurred" class="md-primary" @change="filterChange"></md-switch>
         </md-list-item>
         <md-list-item>
           帽子
-          
           <md-switch v-model="filter.headwear" id="blurred" class="md-primary"
                      @change="filterChange"></md-switch>
         </md-list-item>
         <md-list-item>
           楽しい
-          
           <md-switch v-model="filter.joy" id="blurred" class="md-primary" @change="filterChange"></md-switch>
         </md-list-item>
         <md-list-item>
           悲しい
-          
           <md-switch v-model="filter.sorrow" id="blurred" class="md-primary" @change="filterChange"></md-switch>
         </md-list-item>
         <md-list-item>
           驚き
-          
           <md-switch v-model="filter.surprise" id="blurred" class="md-primary"
                      @change="filterChange"></md-switch>
         </md-list-item>
         <md-list-item>
           肌の露出
-          
           <md-switch v-model="filter.underExposed" id="blurred" class="md-primary"
                      @change="filterChange"></md-switch>
         </md-list-item>
@@ -65,6 +66,7 @@
       return {
         filter: {
           noface: false,
+          description: false,
           blurred: false,
           headwear: false,
           joy: false,

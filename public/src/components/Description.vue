@@ -4,7 +4,7 @@
       <md-input-container md-inline class="photo-description">
         <md-icon>speaker_notes</md-icon>
         <label>Notes</label>
-        <md-input @keyup.enter.native="onSubmit" @blur.native="onSubmit" v-model="description"></md-input>
+        <md-input ref="description" @keyup.enter.native="onSubmit" @blur.native="onSubmit" v-model="description"></md-input>
       </md-input-container>
     </div>
   </transition>
@@ -23,10 +23,15 @@
       return {description: this.photo.description}
     },
     mounted: function () {
+      setTimeout(() => {
+        this.$refs.description.$el.focus()
+      }, 220)
     },
     methods: {
       onSubmit: function () {
-        this.$store.dispatch('updatePhoto', {photo: this.photo, params: {description: this.description}})
+        if (this.photo.description != this.description) {
+          this.$store.dispatch('updatePhoto', {photo: this.photo, params: {description: this.description}})
+        }
         this.$emit('enterDescription')
       },
     }
