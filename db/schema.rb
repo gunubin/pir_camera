@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170404015628) do
+ActiveRecord::Schema.define(version: 20170517070041) do
 
   create_table "faces", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "photo_id"
@@ -34,9 +34,10 @@ ActiveRecord::Schema.define(version: 20170404015628) do
     t.string   "filename"
     t.string   "path"
     t.string   "extname"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.boolean  "favorite"
+    t.text     "description", limit: 65535
   end
 
   add_foreign_key "faces", "photos"

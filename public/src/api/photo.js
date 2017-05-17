@@ -35,6 +35,12 @@ export default {
     axios.get(config.host + '/photos/unfavorite/' + photo_id ).then((res) => {
       cb(res.data)
     })
-  }
+  },
+
+  updatePhoto(photo_id, params, cb) {
+    axios.put(config.host + '/photos/' + photo_id, {params: params} ).then((res) => {
+      cb(res.data)
+    })
+  },
 
 }

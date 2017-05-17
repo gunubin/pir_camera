@@ -46,7 +46,6 @@
     },
     methods: {
       onClickMore: function () {
-        console.log(this.$store);
         this.$store.dispatch('getMorePhotos', this.storeFilter)
       },
       handleWindowResize(event) {

@@ -5,7 +5,6 @@ require "rmagick"
 class PhotosController < ApplicationController
   # GET /photos/
   def index
-
     query = {
       day: params[:day],
       favorite: params[:favorite],
@@ -22,6 +21,13 @@ class PhotosController < ApplicationController
     @photos = Photo.filter(query).order('photos.id desc').limit(21).page(params[:page])
 
     render json: @photos.to_json(include: :faces)
+  end
+
+  # PUT /photos/#{id}
+  def update
+    @photo = Photo.find(params[:id])
+    logger.info params.inspect
+    @photo.update_attributes params[:params]
   end
 
   # GET /photos/favorite/:id
@@ -187,6 +193,13 @@ class PhotosController < ApplicationController
     end
 
   end
+  
 
+
+  private
+  
+  def permitted_params
+    params.permit!  #<=すべてのparamを許可するとき
+  end
 
 end
