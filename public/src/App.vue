@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+
+    <spinner v-if="spinner"></spinner>
+
     <headerComponent :config="config" v-on:onClickCalender="onClickCalender" v-on:clickMenuBtn="onClickMenuBtn"></headerComponent>
 
     <side ref="side"></side>
@@ -11,10 +14,12 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   import Config from './Config'
   import HeaderComponent from './components/HeaderComponent'
   import DailyContainer from './components/DailyContainer'
   import Side from './components/Side'
+  import Spinner from './components/Spinner'
   import datepicker from './components/vue-datepicker-es6.vue';
 
   export default {
@@ -22,6 +27,7 @@
     components: {
       HeaderComponent,
       Side,
+      Spinner,
       DailyContainer,
       'date-picker': datepicker,
     },
@@ -38,6 +44,9 @@
       onCalcancel: function(t) {
       }
     },
+    computed: mapGetters({
+      spinner: 'spinner',
+    }),
     data () {
       return {
         config: Config,
