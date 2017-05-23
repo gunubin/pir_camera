@@ -8,7 +8,7 @@ class Photo < ApplicationRecord
   # Scopes
   scope :filter_favorite, -> { where(favorite: true) }
   scope :filter_non, -> { eager_load(:faces) }
-  scope :filter_description, -> { where.not(description: nil) }
+  scope :filter_description, -> { where.not(description: [nil, '']) }
   scope :filter_noface, -> { includes(:faces).where(faces: { id: nil }) }
   scope :filter_anger, -> { eager_load(:faces).merge(Face.anger) }
   scope :filter_blurred, -> { eager_load(:faces).merge(Face.blurred) }
