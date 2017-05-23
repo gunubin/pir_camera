@@ -22,9 +22,7 @@ Vue.use(VueMaterial)
 
 import App from './App'
 import store from './store/index'
-// import { currency } from './currency'
 
-// Vue.filter('currency', currency)
 Vue.config.productionTip = false
 
 new Vue({

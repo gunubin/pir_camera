@@ -3,6 +3,7 @@ require "rmagick"
 
 # photos controller
 class PhotosController < ApplicationController
+
   # GET /photos/
   def index
     query = {
@@ -51,22 +52,15 @@ class PhotosController < ApplicationController
 
   def create
 
-
     file = params[:pic]
-    # original_name = file.original_filename
     extname = '.png'
     name = Time.now.strftime('%H%M%S')
-
 
     @today = Time.now()
 
     path = "public/photos/#{@today.year}/#{@today.month}-#{@today.day}"
 
     FileUtils.mkdir_p(path) unless FileTest.exist?(path)
-    # File.open("#{path}/#{name}#{extname}", 'wb') { |f|
-    #   f.write(file.read)
-    # }
-
 
     img = Magick::Image.from_blob(file.read).shift
     img.format = 'PNG'
@@ -79,7 +73,6 @@ class PhotosController < ApplicationController
     tweet = tweetFaces(faces)
 
     render json: {status: "ok", tweet: tweet}
-
 
   end
 
@@ -165,7 +158,7 @@ class PhotosController < ApplicationController
   # POSSIBLE	そうだと言えるレベル
   # UNLIKELY	低いレベル
   # VERY_UNLIKELY	非常に低いレベル
-  # NKNOWN
+  # UNKNOWN
   def anyLevel(feel)
     feel == 'VERY_LIKELY' || feel == 'LIKELY' || feel == 'POSSIBLE' || feel == 'UNLIKELY'
   end

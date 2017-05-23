@@ -41,16 +41,13 @@
 <style scoped>
   .fade-enter-active, .fade-leave-active {
     transition: all .22s ease-in;
-    /*transform: translateY(0%);*/
   }
 
   .fade-enter, .fade-leave-to {
-    /*opacity: 0;*/
     transform: translateY(100%);
   }
 
   .photo-description-outer {
-    /*opacity: 0.9;*/
     padding: 0 20px;
     z-index: 100;
     position: absolute;

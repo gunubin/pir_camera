@@ -11,7 +11,6 @@
         <md-icon>delete</md-icon>
       </md-button>
 -->
-
       <md-button class="md-icon-button" @click.native="onClickCalender">
         <md-icon>date_range</md-icon>
       </md-button>

@@ -1,24 +1,14 @@
-# README
+# 人感センサー+シリアルカメラ+Google Vision API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## フロー
 
-Things you may want to cover:
+- 人感センサーが感知
+- 1.5秒後に撮影
+- JEPGデータを自宅サーバーへPOST送信
+- railsサーバーで受信してDBへ格納
+- JPEGデータをGoogle Vision APIへ送信
+- APIレスポンスをDBへ格納
+- vue.jsでお気に入り登録機能や検索で思い出を振り返る
+- TwitterにGoogle Vision APIの情報をツイートする
 
-* Ruby version
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
